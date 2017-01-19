@@ -1,21 +1,23 @@
-var gulp       = require('gulp');
-var sass       = require('gulp-sass');
-var minifyCSS  = require('gulp-minify-css');
-var uglify     = require('gulp-uglify');
-var concat     = require('gulp-concat');
-var watch      = require('gulp-watch');
+var gulp   = require('gulp');
+var sass   = require('gulp-sass');
+var clean  = require('gulp-clean-css');
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+var watch  = require('gulp-watch');
 
 gulp.task('default', ['watch', 'css', 'js']);
 
 gulp.task('watch', function() {
-	gulp.watch('assets/_sass/*.scss', ['css']);
+	gulp.watch('assets/_sass/**/*.scss', ['css']);
 	gulp.watch('assets/_scripts/*.js', ['js']);
 });
 
 gulp.task('css', function() {
-	return gulp.src('assets/_sass/*.scss')
+	return gulp.src('assets/_sass/styles.scss')
 		.pipe(sass().on('error', sass.logError))
-		.pipe(minifyCSS())
+    .pipe(clean())
+    .pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('assets/css'));
 });
 
