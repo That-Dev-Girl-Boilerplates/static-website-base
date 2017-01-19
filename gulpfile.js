@@ -23,7 +23,8 @@ gulp.task('css', function() {
 
 gulp.task('js', function() {
 	return gulp.src([
-		'assets/_scripts/base.js'
+    'assets/_scripts/vendor/jquery-2.2.4.min.js',
+    'assets/_scripts/custom/base.js'
 	])
 	    .pipe(concat('scripts.min.js'))
 	    .pipe(uglify())
