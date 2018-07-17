@@ -1,32 +1,51 @@
-var gulp   = require('gulp');
-var sass   = require('gulp-sass');
-var clean  = require('gulp-clean-css');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var concat = require('gulp-concat');
-var watch  = require('gulp-watch');
+const gulp = require('gulp'),
+      babelify = require('babelify'),
+      browserify = require('browserify'),
+      clean = require('gulp-clean-css'),
+      concat = require('gulp-concat'),
+      rename = require('gulp-rename'),
+      sass = require('gulp-sass'),
+      source = require('vinyl-source-stream'),
+      streamify = require('gulp-streamify'),
+      uglify = require('gulp-uglify'),
+      watch = require('gulp-watch');
 
-gulp.task('default', ['watch', 'css', 'js']);
+// Array of JS files, in order by dependency.
+const jsFiles = [
+  'node_modules/jquery/dist/jquery.min.js',
+  'assets/source/js/base/set-jquery.js',
+  'assets/source/js/component/example.js'
+];
 
-gulp.task('watch', function() {
-	gulp.watch('assets/_sass/**/*.scss', ['css']);
-	gulp.watch('assets/_scripts/*.js', ['js']);
+// JS build task.
+gulp.task('js', () => {
+	browserify({
+    	entries: jsFiles,
+    	debug: true
+  	})
+    .transform(babelify.configure({
+      presets: ['env']
+    }))
+    .bundle()
+    .pipe(source('scripts.min.js'))
+    .pipe(streamify(uglify()))
+    .pipe(gulp.dest('assets/build/js'));
 });
 
+// CSS build task.
 gulp.task('css', function() {
-	return gulp.src('assets/_sass/styles.scss')
+	return gulp.src('assets/source/scss/styles.scss')
 		.pipe(sass().on('error', sass.logError))
     .pipe(clean())
     .pipe(rename({suffix: '.min'}))
-		.pipe(gulp.dest('assets/css'));
+		.pipe(gulp.dest('assets/build/css'));
 });
 
-gulp.task('js', function() {
-	return gulp.src([
-    'assets/_scripts/vendor/jquery-2.2.4.min.js',
-    'assets/_scripts/custom/base.js'
-	])
-	    .pipe(concat('scripts.min.js'))
-	    .pipe(uglify())
-	    .pipe(gulp.dest('assets/js'));
+// Watcher task.
+gulp.task('watch', function() {
+	gulp.watch('assets/source/scss/**/*.scss', ['css']);
+	gulp.watch('assets/source/js/*.js', ['js']);
 });
+
+// Default task.
+gulp.task('default', ['watch', 'css', 'js']);

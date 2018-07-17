@@ -1,5 +1,5 @@
-var base = {
-  message: 'Hello World!',
+const example = {
+  message: 'Hello world!',
 
   print: function() {
     console.log(this.message);
@@ -7,5 +7,5 @@ var base = {
 }
 
 $(document).ready(function() {
-  base.print();
+  example.print();
 });
