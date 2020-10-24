@@ -3,20 +3,12 @@ const gulp       = require( 'gulp' ),
       buffer     = require( 'vinyl-buffer' ),
       concat     = require( 'gulp-concat' ),
       sass       = require( 'gulp-sass' ),
-      sassLint   = require( 'gulp-sass-lint' ),
       source     = require( 'vinyl-source-stream' ),
       uglify     = require( 'gulp-uglify' );
 
-// Array of JS files, in order by dependency.
-const jsFiles = [
-  'node_modules/jquery/dist/jquery.min.js',
-  'assets/source/js/base/set-jquery.js',
-  'assets/source/js/component/example.js'
-];
-
 // JS build task.
 gulp.task( 'js', () => {
-  return browserify( { entries: jsFiles } )
+  return browserify( { entries: [ 'assets/source/js/scripts.js' ] } )
     .transform( 'babelify', { presets: [ '@babel/preset-env' ] } )
     .bundle()
     .pipe( source( 'scripts.min.js' ) )

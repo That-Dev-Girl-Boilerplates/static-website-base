@@ -1,11 +1,22 @@
-const example = {
-  message: 'Hello world!',
+/**
+ * Example
+ *
+ * Simple example component to model real components from.
+ */
 
-  print: function() {
-    console.log(this.message);
-  }
-}
+const Example = ( () => {
 
-$(document).ready(function() {
-  example.print();
-});
+  // Variables.
+  const message = 'Hello world!';
+
+  // Functions for this compoent.
+  const print = ( message ) => {
+    console.log( message );
+  };
+
+  // Do some things.
+  print( message );
+
+})();
+
+export default Example;
