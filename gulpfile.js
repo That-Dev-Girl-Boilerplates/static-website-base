@@ -1,8 +1,7 @@
 const gulp       = require( 'gulp' ),
       browserify = require( 'browserify' ),
       buffer     = require( 'vinyl-buffer' ),
-      concat     = require( 'gulp-concat' ),
-      sass       = require( 'gulp-sass' ),
+      sass       = require( 'gulp-dart-sass' ),
       source     = require( 'vinyl-source-stream' ),
       uglify     = require( 'gulp-uglify' );
 
