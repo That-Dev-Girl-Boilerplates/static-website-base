@@ -3,6 +3,7 @@
 This repository is my personal standard base for any static website.  It can and will be modified to suit a particular project.
 
 ## Getting Started
+
 1. Fork or clone this repository.
 2. In the repository directory, run `npm install`.
 3. Run the `gulp` script to build the CSS and Javascript files.

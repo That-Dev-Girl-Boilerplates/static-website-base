@@ -2,7 +2,13 @@
  * Colors
  */
 
-$black: #000;
-$white: #fff;
+:root {
 
-$orchid: #b163a3;
+  // Primary colors.
+  --site-orchid: #b163a3;
+
+  // Neutral colors.
+  --site-black: #000;
+  --site-white: #fff;
+
+}
